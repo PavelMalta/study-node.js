@@ -6,9 +6,11 @@ let users = [
     {"id": 3, "name": "Kakasha"}
 ];
 
-const getUsers = (callback) => {
+const getUsers = () => {
+    return new Promise((resolve, reject) => {
         fs.readFile("users.json", function (err, buf) {
-        callback(buf.toString())
+            resolve(buf.toString())
+        })
     })
 }
 
