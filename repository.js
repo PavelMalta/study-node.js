@@ -1,4 +1,4 @@
-
+const fs = require("fs");
 
 let users = [
     {"id": 1, "name": "Sasha"},
@@ -6,8 +6,10 @@ let users = [
     {"id": 3, "name": "Kakasha"}
 ];
 
-const getUsers = () => {
-    return users;
+const getUsers = (callback) => {
+        fs.readFile("users.json", function (err, buf) {
+        callback(buf.toString())
+    })
 }
 
 const addUser = (name) => {

@@ -4,7 +4,11 @@ exports.usersController = (req, res) => {
     if (req.method === "POST") {
         addUser("Andrey")
         res.write(JSON.stringify({success: true}));
+        res.end();
     } else {
-        res.write(JSON.stringify(getUsers()));
+        getUsers( (users) => {
+            res.write(users);
+            res.end();
+        })
     }
 }

@@ -32,8 +32,7 @@ let server = http.createServer((req, res) => {
         default:
             res.write("PAGE NOT FOUND")
     }
-
-    res.end();
 });
 
 server.listen(7542)
+//./index.js localhost 7542
