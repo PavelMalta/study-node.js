@@ -1,21 +1,28 @@
 const fs = require("fs");
 
-let users = [
-    {"id": 1, "name": "Sasha"},
-    {"id": 2, "name": "Pasha"},
-    {"id": 3, "name": "Kakasha"}
-];
-
 const getUsers = () => {
-    return new Promise((resolve, reject) => {
+    let promise = new Promise( (resolve, reject) => {
         fs.readFile("users.json", function (err, buf) {
-            resolve(buf.toString())
+            if (err) {
+                reject(err)
+            } else {
+                resolve(JSON.parse(buf.toString()))
+            }
         })
     })
+    return promise
 }
 
-const addUser = (name) => {
+const addUser = async (name) => {
+    let users = await getUsers()
     users.push({ name: name })
+
+    return new Promise( (res, rej) => {
+        fs.writeFile("users.json", JSON.stringify(users), (err) => {
+            if (err) rej();
+            res();
+        })
+    })
 }
 
 exports.getUsers = getUsers;

@@ -35,4 +35,4 @@ let server = http.createServer((req, res) => {
 });
 
 server.listen(7542)
-//./index.js localhost 7542
+//nodemon ./index.js localhost 7542
