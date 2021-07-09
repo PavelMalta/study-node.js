@@ -1,6 +1,10 @@
 let http = require('http');
 let {usersController} = require('./usersController');
 
+process.on('unhandledRejection', function (reason, p) {
+    console.log(reason, p)
+})
+
 let cors = (req, res) => {
     // Set CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
