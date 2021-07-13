@@ -1,42 +1,32 @@
-let http = require('http');
-let {usersController} = require('./usersController');
+const {addUser, getUsers} = require('./repository');
+const express = require('express');
 
-process.on('unhandledRejection', function (reason, p) {
-    console.log(reason, p)
+//created app
+const app = express()
+
+const port = 7542
+
+// configured app
+app.get('/users', async (req, res) => {
+    let users = await getUsers()
+    res.send(JSON.stringify(users))
+})
+app.post('/users', async (req, res) => {
+    let result = await addUser("Andrey")
+    res.send(JSON.stringify({success: true}))
 })
 
-let cors = (req, res) => {
-    // Set CORS headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Request-Method', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-    if (req.method === 'OPTIONS') {
-        res.writeHead(200);
-        res.end();
-        return true
-    }
-    return false
-}
+app.get('/tasks', (req, res) => {
+    res.send('Tasks')
+})
 
-let server = http.createServer((req, res) => {
+// added middleware
+app.use((req, res) => {
+    res.send("404")
+})
 
-    if (cors(req, res)) return;
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+})
 
-    let message = 'Pasha'
-    console.log('some request');
-
-    switch (req.url) {
-        case "/users" :
-            usersController(req, res);
-            break;
-        case  "/lessons" :
-            res.write(`tasks`);
-            break
-        default:
-            res.write("PAGE NOT FOUND")
-    }
-});
-
-server.listen(7542)
 //nodemon ./index.js localhost 7542
