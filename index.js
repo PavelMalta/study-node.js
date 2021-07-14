@@ -1,6 +1,7 @@
 const {addUser, getUsers} = require('./repository');
 const express = require('express');
 const users = require('./users-router')
+const cors = require('cors')
 
 //created app
 const app = express()
@@ -8,9 +9,8 @@ const app = express()
 const port = 7542
 
 // configured app
-
+app.use(cors())
 app.use('/users', users);
-
 
 app.get('/tasks', (req, res) => {
     res.send('Tasks')

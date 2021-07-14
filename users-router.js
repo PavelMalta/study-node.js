@@ -14,6 +14,18 @@ router.get('/', async (req, res) => {
     let users = await getUsers()
     res.send(users)
 })
+router.get('/:id', async (req, res) => {
+    let userId = req.params.id
+    let users = await getUsers()
+    let user = users.find(item => item.id == userId)
+    if (user) {
+        res.send(user)
+    } else {
+        res.send(404)
+    }
+})
+
+
 router.post('/', async (req, res) => {
     let result = await addUser("Andrey")
     res.send({success: true})
