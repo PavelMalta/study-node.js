@@ -1,5 +1,6 @@
 const {addUser, getUsers} = require('./repository');
 const express = require('express');
+const users = require('./users-router')
 
 //created app
 const app = express()
@@ -7,14 +8,9 @@ const app = express()
 const port = 7542
 
 // configured app
-app.get('/users', async (req, res) => {
-    let users = await getUsers()
-    res.send(JSON.stringify(users))
-})
-app.post('/users', async (req, res) => {
-    let result = await addUser("Andrey")
-    res.send(JSON.stringify({success: true}))
-})
+
+app.use('/users', users);
+
 
 app.get('/tasks', (req, res) => {
     res.send('Tasks')
@@ -22,7 +18,7 @@ app.get('/tasks', (req, res) => {
 
 // added middleware
 app.use((req, res) => {
-    res.send("404")
+    res.send(404)
 })
 
 app.listen(port, () => {
