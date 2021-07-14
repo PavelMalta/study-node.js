@@ -12,6 +12,10 @@ router.use(function timeLog(req, res, next) {
 // define the home page route
 router.get('/', async (req, res) => {
     let users = await getUsers()
+
+    if (!!req.query.search) {
+        users = users.filter(u => u.name.indexOf(req.query.search) > -1)
+    }
     res.send(users)
 })
 router.get('/:id', async (req, res) => {
@@ -27,7 +31,8 @@ router.get('/:id', async (req, res) => {
 
 
 router.post('/', async (req, res) => {
-    let result = await addUser("Andrey")
+    let name = req.body.name
+    let result = await addUser(name)
     res.send({success: true})
 })
 

@@ -2,6 +2,7 @@ const {addUser, getUsers} = require('./repository');
 const express = require('express');
 const users = require('./users-router')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 
 //created app
 const app = express()
@@ -10,7 +11,11 @@ const port = 7542
 
 // configured app
 app.use(cors())
-app.use('/users', users);
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+app.use('/users', users)
 
 app.get('/tasks', (req, res) => {
     res.send('Tasks')
