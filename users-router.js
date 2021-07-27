@@ -1,4 +1,4 @@
-let {addUser, getUsers} = require('./repository');
+let {addTractor, getTractors} = require('./repository');
 
 var express = require('express');
 var router = express.Router();
@@ -11,7 +11,7 @@ router.use(function timeLog(req, res, next) {
 
 // define the home page route
 router.get('/', async (req, res) => {
-    let users = await getUsers()
+    let users = await getTractors()
 
     if (!!req.query.search) {
         users = users.filter(u => u.name.indexOf(req.query.search) > -1)
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 })
 router.get('/:id', async (req, res) => {
     let userId = req.params.id
-    let users = await getUsers()
+    let users = await getTractors()
     let user = users.find(item => item.id == userId)
     if (user) {
         res.send(user)
@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     let name = req.body.name
-    let result = await addUser(name)
+    let result = await addTractor(name)
     res.send({success: true})
 })
 

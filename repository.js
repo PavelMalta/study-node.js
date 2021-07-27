@@ -1,16 +1,25 @@
 const fs = require("fs");
 const {readJsonFromFile, writeJsonToFile} = require("./fs-utils");
+const mongoose = require('mongoose');
 
+const tractorSchema = new mongoose.Schema({
+    name: String
+});
 
-const getUsers = () => {
-    return readJsonFromFile("users.json")
+const Tractor = mongoose.model('Tractor', tractorSchema);
+
+const getTractors = () => {
+    return Tractor.find()
 }
 
-const addUser = async (name) => {
-    let users = await getUsers()
-    users.push({name: name})
-    return writeJsonToFile("users.json", users)
+const addTractor = async (name) => {
+    const tractor = new Tractor({name})
+    return tractor.save()
+
+    /* let users = await getUsers()
+     users.push({name: name})
+     return writeJsonToFile("users.json", users)*/
 }
 
-exports.getUsers = getUsers;
-exports.addUser = addUser;
+exports.getTractors = getTractors;
+exports.addTractor = addTractor;
