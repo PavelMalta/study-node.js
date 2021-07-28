@@ -21,5 +21,11 @@ const addTractor = async (name) => {
      return writeJsonToFile("users.json", users)*/
 }
 
+const deleteTractor = (id) => {
+    return Tractor.deleteOne({_id: id})
+}
+
+
 exports.getTractors = getTractors;
 exports.addTractor = addTractor;
+exports.deleteTractor = deleteTractor;

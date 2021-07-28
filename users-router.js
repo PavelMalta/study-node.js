@@ -1,4 +1,4 @@
-let {addTractor, getTractors} = require('./repository');
+let {addTractor, getTractors, deleteTractor} = require('./repository');
 
 var express = require('express');
 var router = express.Router();
@@ -34,6 +34,12 @@ router.post('/', async (req, res) => {
     let name = req.body.name
     let result = await addTractor(name)
     res.send({success: true})
+})
+
+router.delete('/:id', async (req, res) => {
+    let tractorId = req.params.id
+    let tractors = await deleteTractor(tractorId)
+    res.send(204)
 })
 
 module.exports = router;
